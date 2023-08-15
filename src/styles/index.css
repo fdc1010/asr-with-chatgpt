@@ -68,6 +68,9 @@ input:focus{
 .ReactModal__Body--open{
   overflow: hidden;
 }
+.ReactModal__Content {
+  filter: blur(0px);
+}
   .slider-indicator:first-child {
     margin-left: 0;
 }
