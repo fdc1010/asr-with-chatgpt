@@ -1,4 +1,3 @@
-import AuthFormContainer from 'components/AuthFormContainer'
 import { default as ModalProvider } from 'react-modal'
 import Container from './Container'
 

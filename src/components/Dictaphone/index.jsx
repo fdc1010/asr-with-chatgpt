@@ -2,7 +2,7 @@ import React from 'react'
 import { createSpeechlySpeechRecognition } from '@speechly/speech-recognition-polyfill'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 
-const appId = process.env.REACT_APP_SPEECHLY_API
+const appId = import.meta.env.VITE_SPEECHLY_API_KEY
 const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(appId)
 SpeechRecognition.applyPolyfill(SpeechlySpeechRecognition)
 

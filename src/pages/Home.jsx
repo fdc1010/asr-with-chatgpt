@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useState } from 'react'
-import Header from '../components/Header'
-import Body from '../components/Body'
-import Footer from '../components/Footer'
-import RecordNotes from '../components/RecordNotes'
 import SignUpModal from 'modals/SignUpModal'
+import Dictaphone from 'components/Dictaphone'
+import Header from 'components/Header'
+import Body from 'components/Body'
+import Footer from 'components/Footer'
+import RecordNotes from 'components/RecordNotes'
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -25,6 +26,7 @@ const Home = () => {
       <Body />
       <Footer />
       <RecordNotes />
+      <Dictaphone />
     </div>
   )
 }
