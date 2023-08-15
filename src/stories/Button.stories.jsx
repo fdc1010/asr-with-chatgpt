@@ -2,8 +2,9 @@ import React from "react";
 
 import { Button as ButtonComponent, Img } from "components";
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  title: "franklin_s_application1/Buttons",
+  title: "franklin-audiopen/Buttons",
   component: ButtonComponent,
   argTypes: {
     children: { control: "text" },

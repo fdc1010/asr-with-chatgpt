@@ -7,35 +7,35 @@ body {
   margin: 0;
   padding: 0;
 }
-.dhiwise-code,
-.dhiwise-navigation {
+.audiopen-code,
+.audiopen-navigation {
   min-height: 100%;
 }
 .common-pointer {
   cursor: pointer;
 }
-.dhiwise-navigation {
+.audiopen-navigation {
   padding: 20px;
   background-color: #232323;
 }
-.dhiwise-navigation h1 {
+.audiopen-navigation h1 {
   color: white;
 }
-.dhiwise-navigation .headline {
+.audiopen-navigation .headline {
   font-size: 14px;
   margin-bottom: 10px;
   color: white;
 }
-.dhiwise-navigation ul {
+.audiopen-navigation ul {
   padding: 0;
 }
-.dhiwise-navigation ul li {
+.audiopen-navigation ul li {
   list-style: none;
   margin-right: 20px;
   font-size: 16px;
   font-weight: bold;
 }
-.dhiwise-navigation a {
+.audiopen-navigation a {
   color: #132cdc;
 }
 table {

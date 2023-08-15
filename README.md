@@ -1,6 +1,6 @@
-## franklin_s_application1
+## franklin-audiopen
 
-Generated with ❤️ from [DhiWise](https://www.dhiwise.com)
+Generated with ❤️ from [DhiWise](https://audiopen.ai)
 
 ## Description
 

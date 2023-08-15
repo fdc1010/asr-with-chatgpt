@@ -1,8 +1,8 @@
 module.exports = {
   mode: "jit",
   content: [
-    "./src/**/**/*.{js,ts,jsx,tsx,html,mdx}",
-    "./src/**/*.{js,ts,jsx,tsx,html,mdx}",
+    "./src/**/**/*.{js,ts,jsx,tsx,html,mdx,css}",
+    "./src/**/*.{js,ts,jsx,tsx,html,mdx,css}",
   ],
   darkMode: "class",
   theme: {
@@ -27,7 +27,7 @@ module.exports = {
           "800_7f": "#3d3f547f",
           "800_e5": "#3d3f54e5",
         },
-        gray: {
+        gray2: {
           100: "#f7f0f0",
           "900_cc": "#171717cc",
           "100_99": "#f7f0f099",
@@ -42,7 +42,19 @@ module.exports = {
         },
         black: { 900: "#000000", "900_56": "#00000056" },
         yellow: { 900: "#de7818" },
-        white: { A700: "#ffffff" },
+        white2: { A700: "#ffffff" },
+        darkslategray: {
+          "100": "#3d3f54",
+          "200": "rgba(61, 63, 84, 0.5)",
+          "300": "rgba(61, 63, 84, 0.2)",
+        },
+        whitesmoke: "#f7f0f0",
+        white: "#fff",
+        dimgray: "#4a4c5f",
+        gray: "rgba(0, 0, 0, 0.05)",
+        slategray: "#60637b",
+        orangered: "#ff5c0a",
+        tomato: "#ff6154"
       },
       fontFamily: { dmsans: "DM Sans", fraunces: "Fraunces", inter: "Inter" },
       backgroundImage: {

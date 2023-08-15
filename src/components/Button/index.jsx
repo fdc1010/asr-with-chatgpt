@@ -1,15 +1,17 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { OrangeButtonPill } from './OrangeButtonPill'
+import { SmokeButtonPill } from './SmokeButtonPill'
 
 const Button = ({
   children,
-  className = "",
+  className = '',
   leftIcon,
   rightIcon,
-  shape = "",
-  size = "",
-  variant = "",
-  color = "",
+  shape = '',
+  size = '',
+  variant = '',
+  color = '',
   ...restProps
 }) => {
   return (
@@ -18,12 +20,12 @@ const Button = ({
       {children}
       {!!rightIcon && rightIcon}
     </button>
-  );
-};
+  )
+}
 
 Button.propTypes = {
   className: PropTypes.string,
-  children: PropTypes.node,
-};
+  children: PropTypes.node
+}
 
-export { Button };
+export { Button, OrangeButtonPill, SmokeButtonPill }

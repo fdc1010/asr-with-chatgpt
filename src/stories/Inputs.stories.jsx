@@ -2,8 +2,9 @@ import React from "react";
 
 import { Input } from "components";
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  title: "franklin_s_application1/Input",
+  title: "franklin-audiopen/Input",
   component: Input,
 };
 
