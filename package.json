@@ -25,7 +25,7 @@
     "util": "^0.12.5"
   },
   "scripts": {
-    "server:install": "pnpm i --prefix server",
+    "server:install": "pnpm i --prefix ../server",
     "server:run": "npm run start --prefix server",
     "start": "vite",
     "build": "vite build",
