@@ -1,38 +1,56 @@
-import { Img } from 'components'
-const RecordNotes = () => {
+import { Button, Img } from 'components'
+import { noop } from 'lodash'
+import PropTypes from 'prop-types'
+
+const RecordNotes = ({ onClickRec = noop, stopListening = noop, startListening = noop }) => {
   return (
-    <div className="fixed top-[calc(100%-90px)] w-full overflow-hidden">
+    <div className="overflow-hidden">
       <div className="grid grid-cols-3 items-center w-full px-4">
-        <div>
-          <Img
-            className="overflow-hidden object-cover w-[30px]"
-            alt=""
-            width={30}
-            height={30}
-            src="/assets/images/update@2x.png"
-          />
+        <div className="flex flex-col items-start justify-center">
+          <Button>
+            <Img
+              className="w-[30px]"
+              alt=""
+              width={30}
+              height={30}
+              src="/assets/images/update@2x.png"
+            />
+          </Button>
         </div>
         <div className="flex flex-col items-center justify-center">
-          <Img
-            className="rounded-[200px] overflow-hidden object-cover"
-            alt=""
-            width={80}
-            height={80}
-            src="/assets/svg/record.svg"
-          />
+          <Button
+            onClick={onClickRec}
+            onTouchStart={startListening}
+            onMouseDown={startListening}
+            onTouchEnd={stopListening}
+            onMouseUp={stopListening}>
+            <Img
+              className="rounded-[200px] border-2 border-whitesmoke-100"
+              alt=""
+              width={80}
+              height={80}
+              src="/assets/svg/record.svg"
+            />
+          </Button>
         </div>
         <div className="flex flex-col items-end">
-          <Img
-            className="overflow-hidden object-cover w-[30px]"
-            alt=""
-            width={30}
-            height={30}
-            src="/assets/images/upload@2x.png"
-          />
+          <Button>
+            <Img
+              className="w-[30px]"
+              alt=""
+              width={30}
+              height={30}
+              src="/assets/images/upload@2x.png"
+            />
+          </Button>
         </div>
       </div>
     </div>
   )
 }
-
+RecordNotes.propTypes = {
+  onClickRec: PropTypes.func,
+  stopListening: PropTypes.func,
+  startListening: PropTypes.func
+}
 export default RecordNotes

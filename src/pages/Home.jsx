@@ -1,32 +1,108 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useState } from 'react'
-import SignUpModal from 'modals/SignUpModal'
-import Dictaphone from 'components/Dictaphone'
-import Header from 'components/Header'
-import Body from 'components/Body'
-import Footer from 'components/Footer'
+import React, { useCallback, useEffect, useState } from 'react'
+import AuthModal from 'modals/AuthModal'
 import RecordNotes from 'components/RecordNotes'
+import Header from 'layout/Header'
+import Body from 'layout/Body'
+import Footer from 'layout/Footer'
+import { createSpeechlySpeechRecognition } from '@speechly/speech-recognition-polyfill'
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
+const appId = import.meta.env.VITE_SPEECHLY_API_KEY
+const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(appId)
+SpeechRecognition.applyPolyfill(SpeechlySpeechRecognition)
 
 const Home = () => {
+  const { transcript, listening, browserSupportsSpeechRecognition } = useSpeechRecognition()
+
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const onHandleClick = useCallback(() => {
+  const [isRecording, setIsRecording] = useState(false)
+  const [isTranscribing, setIsTranscribing] = useState(false)
+  const [isOutput, setIsOutput] = useState(false)
+  const [result, setResult] = useState('')
+  const [prompt, setPrompt] = useState('')
+
+  const onHandlePrompt = (wordsDict) => {
+    setPrompt(wordsDict)
+    console.log('wordsDict', wordsDict)
+  }
+
+  const onHandleModalOpen = () => setIsModalOpen(true)
+  const onHandleModalClose = () => setIsModalOpen(false)
+
+  const onHandleSignUp = useCallback(() => {
     if (isModalOpen) onHandleModalClose()
     else onHandleModalOpen()
   }, [isModalOpen])
-  const onHandleModalOpen = () => setIsModalOpen(true)
-  const onHandleModalClose = () => setIsModalOpen(false)
+  const onHandleRec = useCallback(
+    () => {
+      setIsRecording(true)
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isRecording]
+  )
+  const onHandleTrans = useCallback(
+    (transcribing) => {
+      setIsTranscribing(transcribing)
+      setIsRecording(false)
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isTranscribing]
+  )
+
+  const onHandleOutput = useCallback(
+    (output, isOutput) => {
+      if (isOutput) {
+        setIsTranscribing(false)
+        setIsOutput(true)
+        setResult(output)
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isOutput]
+  )
+
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>
+  }
+  const startListening = () => SpeechRecognition.startListening({ continuous: true })
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (transcript) onHandlePrompt(transcript)
+    if (listening && isTranscribing && !isRecording) {
+      SpeechRecognition.stopListening()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transcript])
+
   return (
-    <div className="[background:radial-gradient(100%_100%_at_50%_-40%,_#ff5c0a,_#f7f0f0,_#f7f0f0)] text-[#3D3F54] box-border w-full overflow-hidden flex flex-col items-center justify-start gap-[129px] mix-blend-normal border-[1px] border-solid border-darkslategray-300">
-      <SignUpModal
+    <div className="audiopen-style">
+      <AuthModal
         isOpen={isModalOpen}
         onRequestClose={onHandleModalClose}
         shouldCloseOnOverlayClick={true}
       />
-      <Header onHandleClick={onHandleClick} />
+      <Header
+        onHandleSignUp={onHandleSignUp}
+        isRecording={isRecording}
+        isTranscribing={isTranscribing}
+        isOutput={isOutput}
+        onClickRec={onHandleRec}
+        onClickTrans={onHandleTrans}
+        onHandleOutput={onHandleOutput}
+        result={result}
+        prompt={prompt}
+      />
       <Body />
       <Footer />
-      <RecordNotes />
-      <Dictaphone />
+      {!isRecording && !isTranscribing && !isOutput && (
+        <div className="fixed top-[calc(100%-90px)] w-full">
+          <RecordNotes
+            onClickRec={onHandleRec}
+            startListening={startListening}
+            stopListening={SpeechRecognition.stopListening}
+          />
+        </div>
+      )}
     </div>
   )
 }

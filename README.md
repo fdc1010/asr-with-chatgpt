@@ -54,11 +54,12 @@ We have detected common components and have generated possible variants of it.To
 ├── src
 │   ├── App.jsx
 │   ├── assets
-│   │   └── fonts ---------- Project fonts
+│   │   ├── fonts ---------- Project fonts
+│   │   ├── images --------- Images/Icons
+│   │   └── svg ------------ svg format images/icons
 │   ├── components --------- UI and Detected Common Components
-│   ├── constants ---------- Project constants, eg: string consts
-│   ├── hooks -------------- Helpful Hooks
 │   ├── index.jsx
+│   ├── layout ------------- Contains the header, body, footer section
 │   ├── pages -------------- All route pages
 │   ├── Routes.jsx ---------- Routing
 │   ├── styles
