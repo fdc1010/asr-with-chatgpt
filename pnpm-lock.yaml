@@ -14,9 +14,6 @@ dependencies:
   '@testing-library/user-event':
     specifier: ^12.8.3
     version: 12.8.3(@testing-library/dom@9.3.1)
-  audiopen-backend:
-    specifier: link:server
-    version: link:server
   axios:
     specifier: ^1.4.0
     version: 1.4.0
