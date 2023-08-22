@@ -9,7 +9,7 @@ const ChatGPT = () => {
     e.preventDefault()
 
     try {
-      const result = await axios.post(`${import.meta.env.VITE_API_BASEURL}/chatgpt`, {
+      const result = await axios.post(`${import.meta.env.VITE_API_BASEURL_PY}/chatgpt`, {
         prompt: input
       })
       setResponse(result.data.text)
