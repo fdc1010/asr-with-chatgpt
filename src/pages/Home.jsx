@@ -71,24 +71,17 @@ const Home = () => {
     if (transcript) onHandlePrompt(transcript)
     if (listening && isTranscribing && !isRecording) {
       SpeechRecognition.stopListening()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transcript])
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    async function callChatGPT() {
-      return await axios.get(`${import.meta.env.VITE_API_BASEURL_PY}/chatgpt?prompt=${prompt}`)
-    }
-    if (isTranscribing && !isRecording) {
       callChatGPT().then((response) => {
         onHandleOutput(response.data, true)
         onHandleTrans(false)
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prompt])
+  }, [transcript])
 
+  async function callChatGPT() {
+    return await axios.get(`${import.meta.env.VITE_API_BASEURL_PY}/chatgpt?prompt=${prompt}`)
+  }
   return (
     <div className="audiopen-style">
       <AuthModal
