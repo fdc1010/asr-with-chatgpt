@@ -15,7 +15,6 @@ const Header = ({
   isRecording = false,
   isTranscribing = false,
   isOutput = false,
-  listening = false,
   result = '',
   prompt = ''
 }) => {
@@ -48,7 +47,6 @@ Header.propTypes = {
   isRecording: PropTypes.bool,
   isTranscribing: PropTypes.bool,
   isOutput: PropTypes.bool,
-  listening: PropTypes.bool,
   result: PropTypes.string,
   prompt: PropTypes.string
 }

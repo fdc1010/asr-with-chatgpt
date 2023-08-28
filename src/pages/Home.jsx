@@ -28,6 +28,7 @@ const Home = () => {
     if (isModalOpen) onHandleModalClose()
     else onHandleModalOpen()
   }, [isModalOpen])
+
   const onHandleRec = useCallback(
     () => {
       setIsRecording(true)
@@ -40,30 +41,40 @@ const Home = () => {
       setIsTranscribing(true)
       setIsRecording(false)
       SpeechRecognition.stopListening()
-      callChatGPT().then((response) => {
-        setResult(response.data)
-        setIsTranscribing(false)
-        setIsOutput(true)
-      })
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [isTranscribing]
   )
 
-  async function callChatGPT() {
-    return await axios.get(`${import.meta.env.VITE_API_BASEURL_PY}/chatgpt?prompt=${prompt}`)
+  async function callChatGPT(input) {
+    console.log('input', input)
+    return await axios.get(`${import.meta.env.VITE_API_BASEURL_PY}/chatgpt?prompt=${input}`)
   }
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>
   }
-  const startListening = () => SpeechRecognition.startListening()
+  const startListening = () => SpeechRecognition.startListening({ continuous: true })
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    if (listening && isRecording && !!transcript) setPrompt(transcript)
+    if (listening && isRecording && transcript) {
+      setPrompt(transcript)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transcript, prompt])
+  }, [transcript])
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (!listening && !isRecording && isTranscribing) {
+      callChatGPT(prompt).then((response) => {
+        setResult(response.data)
+        setIsTranscribing(false)
+        setIsOutput(true)
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transcript, isTranscribing])
 
   return (
     <div className="audiopen-style">
@@ -74,12 +85,10 @@ const Home = () => {
       />
       <Header
         onHandleSignUp={onHandleSignUp}
+        onHandleTrans={onHandleTrans}
         isRecording={isRecording}
         isTranscribing={isTranscribing}
         isOutput={isOutput}
-        onHandleRec={onHandleRec}
-        onHandleTrans={onHandleTrans}
-        listening={listening}
         result={result}
         prompt={prompt}
       />
