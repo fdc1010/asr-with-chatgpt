@@ -7,9 +7,7 @@ import React, { useEffect } from 'react'
 const Transcribing = ({ onClickTrans = noop, onHandleOutput = noop, input = '' }) => {
   useEffect(() => {
     async function callChatGPT() {
-      return await axios.get(`${import.meta.env.VITE_API_BASEURL_PY}/chatgpt`, {
-        prompt: input
-      })
+      return await axios.get(`${import.meta.env.VITE_API_BASEURL_PY}/chatgpt?prompt${input}`)
     }
     callChatGPT()
       .then((response) => {
