@@ -68,8 +68,8 @@ const Home = () => {
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    if (transcript) onHandlePrompt(transcript)
     if (listening && isTranscribing && !isRecording) {
+      onHandlePrompt(transcript)
       SpeechRecognition.stopListening()
       callChatGPT().then((response) => {
         onHandleOutput(response.data, true)
