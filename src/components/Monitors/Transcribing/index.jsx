@@ -11,7 +11,7 @@ const Transcribing = ({ onClickTrans = noop, onHandleOutput = noop, input = '' }
     }
     callChatGPT()
       .then((response) => {
-        onHandleOutput(response, true)
+        onHandleOutput(response.data, true)
         onClickTrans(false)
       })
       .catch((_) => {
