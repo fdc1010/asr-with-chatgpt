@@ -1,8 +1,9 @@
+import React from 'react'
 import { Button, Img } from 'components'
 import { noop } from 'lodash'
 import PropTypes from 'prop-types'
 
-const Recording = ({ onClickTrans = noop }) => {
+const Recording = ({ onHandleTrans = noop, prompt = '' }) => {
   return (
     <div className="flex flex-col items-center justify-center w-full">
       <div className="audiopen-monitor">
@@ -23,13 +24,15 @@ const Recording = ({ onClickTrans = noop }) => {
           </Button>
         </div>
         <div className="absolute w-[calc(100%_-_380px)] top-[calc(50%_+_73.5px)] right-[190px] left-[190px] rounded-181xl bg-gray shadow-[0px_2px_16px_rgba(61,_63,_84,_0.2)] h-20 overflow-hidden">
-          <Button onClick={() => onClickTrans(true)}>
-            <Img
-              className="absolute h-full w-full top-[0px] right-[0px] bottom-[0px] left-[0px] rounded-181xl max-w-full overflow-hidden max-h-full object-cover"
-              alt=""
-              src="/assets/images/stop-recording@2x.png"
-            />
-          </Button>
+          {!!prompt && (
+            <Button onClick={() => onHandleTrans(true)}>
+              <Img
+                className="absolute h-full w-full top-[0px] right-[0px] bottom-[0px] left-[0px] rounded-181xl max-w-full overflow-hidden max-h-full object-cover"
+                alt=""
+                src="/assets/images/stop-recording@2x.png"
+              />
+            </Button>
+          )}
         </div>
         <div className="absolute h-[42.18%] w-[61.52%] top-[22.2%] right-[19.13%] bottom-[35.62%] left-[19.35%]">
           <Button>
@@ -49,7 +52,8 @@ const Recording = ({ onClickTrans = noop }) => {
   )
 }
 Recording.propTypes = {
-  onClickTrans: PropTypes.func
+  onHandleTrans: PropTypes.func,
+  prompt: PropTypes.string
 }
 
-export default Recording
+export default React.memo(Recording)

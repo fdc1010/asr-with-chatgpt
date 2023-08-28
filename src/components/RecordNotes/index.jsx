@@ -2,7 +2,7 @@ import { Button, Img } from 'components'
 import { noop } from 'lodash'
 import PropTypes from 'prop-types'
 
-const RecordNotes = ({ onClickRec = noop, stopListening = noop, startListening = noop }) => {
+const RecordNotes = ({ onHandleRec = noop, stopListening = noop, startListening = noop }) => {
   return (
     <div className="overflow-hidden">
       <div className="grid grid-cols-3 items-center w-full px-4">
@@ -19,7 +19,7 @@ const RecordNotes = ({ onClickRec = noop, stopListening = noop, startListening =
         </div>
         <div className="flex flex-col items-center justify-center">
           <Button
-            onClick={onClickRec}
+            onClick={onHandleRec}
             onTouchStart={startListening}
             onMouseDown={startListening}
             onTouchEnd={stopListening}
@@ -49,7 +49,7 @@ const RecordNotes = ({ onClickRec = noop, stopListening = noop, startListening =
   )
 }
 RecordNotes.propTypes = {
-  onClickRec: PropTypes.func,
+  onHandleRec: PropTypes.func,
   stopListening: PropTypes.func,
   startListening: PropTypes.func
 }

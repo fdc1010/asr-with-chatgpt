@@ -1,3 +1,4 @@
+import React from 'react'
 import { Button, Img, Text } from 'components'
 import PropTypes from 'prop-types'
 import RecordNotes from 'components/RecordNotes'
@@ -54,4 +55,4 @@ Output.propTypes = {
   result: PropTypes.string,
   input: PropTypes.string
 }
-export default Output
+export default React.memo(Output)

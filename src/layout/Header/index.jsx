@@ -11,10 +11,11 @@ import Output from 'components/Monitors/Output'
 
 const Header = ({
   onHandleSignUp = noop,
-  onClickTrans = noop,
+  onHandleTrans = noop,
   isRecording = false,
   isTranscribing = false,
   isOutput = false,
+  listening = false,
   result = '',
   prompt = ''
 }) => {
@@ -23,9 +24,9 @@ const Header = ({
       <ProductCard />
       <Heading />
       {isRecording ? (
-        <Recording onClickTrans={onClickTrans} />
+        <Recording onHandleTrans={onHandleTrans} prompt={prompt} />
       ) : isTranscribing ? (
-        <Transcribing onClickTrans={onClickTrans} />
+        <Transcribing onHandleTrans={onHandleTrans} />
       ) : isOutput ? (
         <Output result={result} input={prompt} />
       ) : (
@@ -43,11 +44,11 @@ const Header = ({
 
 Header.propTypes = {
   onHandleSignUp: PropTypes.func,
-  onClickRec: PropTypes.func,
-  onClickTrans: PropTypes.func,
+  onHandleTrans: PropTypes.func,
   isRecording: PropTypes.bool,
   isTranscribing: PropTypes.bool,
   isOutput: PropTypes.bool,
+  listening: PropTypes.bool,
   result: PropTypes.string,
   prompt: PropTypes.string
 }

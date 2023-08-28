@@ -21,11 +21,6 @@ const Home = () => {
   const [result, setResult] = useState('')
   const [prompt, setPrompt] = useState('')
 
-  const onHandlePrompt = (wordsDict) => {
-    setPrompt(wordsDict)
-    console.log('wordsDict', wordsDict)
-  }
-
   const onHandleModalOpen = () => setIsModalOpen(true)
   const onHandleModalClose = () => setIsModalOpen(false)
 
@@ -41,47 +36,35 @@ const Home = () => {
     [isRecording]
   )
   const onHandleTrans = useCallback(
-    (transcribing) => {
-      setIsTranscribing(transcribing)
+    () => {
+      setIsTranscribing(true)
       setIsRecording(false)
+      SpeechRecognition.stopListening()
+      callChatGPT().then((response) => {
+        setResult(response.data)
+        setIsTranscribing(false)
+        setIsOutput(true)
+      })
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [isTranscribing]
   )
 
-  const onHandleOutput = useCallback(
-    (output, isOutput) => {
-      if (isOutput) {
-        setIsTranscribing(false)
-        setIsOutput(true)
-        setResult(output)
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isOutput]
-  )
+  async function callChatGPT() {
+    return await axios.get(`${import.meta.env.VITE_API_BASEURL_PY}/chatgpt?prompt=${prompt}`)
+  }
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>
   }
-  const startListening = () => SpeechRecognition.startListening({ continuous: true })
+  const startListening = () => SpeechRecognition.startListening()
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    if (listening && isTranscribing && !isRecording && !!transcript) {
-      onHandlePrompt(transcript)
-      SpeechRecognition.stopListening()
-      callChatGPT().then((response) => {
-        onHandleOutput(response.data, true)
-        onHandleTrans(false)
-      })
-    }
+    if (listening && isRecording && !!transcript) setPrompt(transcript)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transcript])
+  }, [transcript, prompt])
 
-  async function callChatGPT() {
-    return await axios.get(`${import.meta.env.VITE_API_BASEURL_PY}/chatgpt?prompt=${prompt}`)
-  }
   return (
     <div className="audiopen-style">
       <AuthModal
@@ -94,8 +77,9 @@ const Home = () => {
         isRecording={isRecording}
         isTranscribing={isTranscribing}
         isOutput={isOutput}
-        onClickRec={onHandleRec}
-        onClickTrans={onHandleTrans}
+        onHandleRec={onHandleRec}
+        onHandleTrans={onHandleTrans}
+        listening={listening}
         result={result}
         prompt={prompt}
       />
@@ -104,7 +88,7 @@ const Home = () => {
       {!isRecording && !isTranscribing && !isOutput && (
         <div className="fixed top-[calc(100%-90px)] w-full">
           <RecordNotes
-            onClickRec={onHandleRec}
+            onHandleRec={onHandleRec}
             startListening={startListening}
             stopListening={SpeechRecognition.stopListening}
           />

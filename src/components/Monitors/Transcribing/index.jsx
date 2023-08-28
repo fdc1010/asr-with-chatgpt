@@ -3,7 +3,7 @@ import { noop } from 'lodash'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-const Transcribing = ({ onClickTrans = noop }) => {
+const Transcribing = ({ onHandleTrans = noop }) => {
   return (
     <div className="flex flex-col items-center justify-center w-full">
       <div className="audiopen-monitor">
@@ -15,7 +15,7 @@ const Transcribing = ({ onClickTrans = noop }) => {
           <div className="">(2/3) transcribing...</div>
           <Button
             className="text-[16px] [text-decoration:underline] opacity-[0.6]"
-            onClick={() => onClickTrans(false)}>
+            onClick={() => onHandleTrans(false)}>
             cancel
           </Button>
         </div>
@@ -25,6 +25,6 @@ const Transcribing = ({ onClickTrans = noop }) => {
 }
 
 Transcribing.propTypes = {
-  onClickTrans: PropTypes.func
+  onHandleTrans: PropTypes.func
 }
-export default Transcribing
+export default React.memo(Transcribing)
