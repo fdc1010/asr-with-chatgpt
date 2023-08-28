@@ -14,10 +14,6 @@ const Transcribing = ({ onClickTrans = noop, onHandleOutput = noop, input = '' }
         onHandleOutput(response.data, true)
         onClickTrans(false)
       })
-      .catch((_) => {
-        onHandleOutput('An Error Occured!', true)
-        onClickTrans(false)
-      })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input])
   return (
