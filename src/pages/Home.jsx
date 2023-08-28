@@ -80,7 +80,7 @@ const Home = () => {
     async function callChatGPT() {
       return await axios.get(`${import.meta.env.VITE_API_BASEURL_PY}/chatgpt?prompt=${prompt}`)
     }
-    if (isTranscribing) {
+    if (isTranscribing && !isRecording) {
       callChatGPT().then((response) => {
         onHandleOutput(response.data, true)
         onHandleTrans(false)
