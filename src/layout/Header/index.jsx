@@ -12,7 +12,6 @@ import Output from 'components/Monitors/Output'
 const Header = ({
   onHandleSignUp = noop,
   onClickTrans = noop,
-  onHandleOutput = noop,
   isRecording = false,
   isTranscribing = false,
   isOutput = false,
@@ -26,7 +25,7 @@ const Header = ({
       {isRecording ? (
         <Recording onClickTrans={onClickTrans} />
       ) : isTranscribing ? (
-        <Transcribing onClickTrans={onClickTrans} onHandleOutput={onHandleOutput} input={prompt} />
+        <Transcribing onClickTrans={onClickTrans} />
       ) : isOutput ? (
         <Output result={result} input={prompt} />
       ) : (
@@ -46,7 +45,6 @@ Header.propTypes = {
   onHandleSignUp: PropTypes.func,
   onClickRec: PropTypes.func,
   onClickTrans: PropTypes.func,
-  onHandleOutput: PropTypes.func,
   isRecording: PropTypes.bool,
   isTranscribing: PropTypes.bool,
   isOutput: PropTypes.bool,

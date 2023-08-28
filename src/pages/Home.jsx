@@ -6,6 +6,7 @@ import Body from 'layout/Body'
 import Footer from 'layout/Footer'
 import { createSpeechlySpeechRecognition } from '@speechly/speech-recognition-polyfill'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
+import axios from 'axios'
 const appId = import.meta.env.VITE_SPEECHLY_API_KEY
 const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(appId)
 SpeechRecognition.applyPolyfill(SpeechlySpeechRecognition)
@@ -74,6 +75,20 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transcript])
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    async function callChatGPT() {
+      return await axios.get(`${import.meta.env.VITE_API_BASEURL_PY}/chatgpt?prompt=${prompt}`)
+    }
+    if (isTranscribing && !isRecording) {
+      callChatGPT().then((response) => {
+        onHandleOutput(response.data, true)
+        onHandleTrans(false)
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prompt])
+
   return (
     <div className="audiopen-style">
       <AuthModal
@@ -88,7 +103,6 @@ const Home = () => {
         isOutput={isOutput}
         onClickRec={onHandleRec}
         onClickTrans={onHandleTrans}
-        onHandleOutput={onHandleOutput}
         result={result}
         prompt={prompt}
       />

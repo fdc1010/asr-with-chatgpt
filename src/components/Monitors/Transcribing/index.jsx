@@ -1,24 +1,9 @@
 import { Button } from 'components'
 import { noop } from 'lodash'
 import PropTypes from 'prop-types'
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
-const Transcribing = ({ onClickTrans = noop, onHandleOutput = noop, input = '' }) => {
-  const [isReplied, setIsReplied] = useState(false)
-  useEffect(() => {
-    async function callChatGPT() {
-      return await axios.get(`${import.meta.env.VITE_API_BASEURL_PY}/chatgpt?prompt=${input}`)
-    }
-    if (!isReplied) {
-      callChatGPT().then((response) => {
-        onHandleOutput(response.data, true)
-        onClickTrans(false)
-        setIsReplied(true)
-      })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [input])
+const Transcribing = ({ onClickTrans = noop }) => {
   return (
     <div className="flex flex-col items-center justify-center w-full">
       <div className="audiopen-monitor">
@@ -40,8 +25,6 @@ const Transcribing = ({ onClickTrans = noop, onHandleOutput = noop, input = '' }
 }
 
 Transcribing.propTypes = {
-  onClickTrans: PropTypes.func,
-  onHandleOutput: PropTypes.func,
-  input: PropTypes.string
+  onClickTrans: PropTypes.func
 }
 export default Transcribing
