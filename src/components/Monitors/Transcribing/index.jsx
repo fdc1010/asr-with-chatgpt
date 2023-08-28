@@ -7,13 +7,19 @@ import React, { useEffect } from 'react'
 const Transcribing = ({ onClickTrans = noop, onHandleOutput = noop, input = '' }) => {
   useEffect(() => {
     async function callChatGPT() {
-      const result = await axios.get(`${import.meta.env.VITE_API_BASEURL_PY}/chatgpt`, {
+      return await axios.get(`${import.meta.env.VITE_API_BASEURL_PY}/chatgpt`, {
         prompt: input
       })
-      onHandleOutput(result.data.text, true)
-      onClickTrans(false)
     }
     callChatGPT()
+      .then((response) => {
+        onHandleOutput(response, true)
+        onClickTrans(false)
+      })
+      .catch((_) => {
+        onHandleOutput('An Error Occured!', true)
+        onClickTrans(false)
+      })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input])
   return (
